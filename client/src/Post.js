@@ -1,22 +1,36 @@
-export default function Post(){
-    const tempImg = "https://images.unsplash.com/photo-1735437683931-b8a17f57912d?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNnx8fGVufDB8fHx8fA%3D%3D";
+import { format } from "date-fns";
+import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
-    return(
-        <div className="post">
+export default function Post({
+  _id,
+  title,
+  summary,
+  cover,
+  content,
+  createdAt,
+  author,
+}) {
+  return (
+    <div className="post">
+      <Link to={`/post/${_id}`}>
         <div className="image">
-        <img src={tempImg} alt="Thumbnail of post"/></div>
-        <div className="content">
-          <h2>Foreigners can open rupee a/c in overseas Indian banks </h2>
-        <p className="info">
-          <a href="/" className="author">Prashant Patil</a>
-          <time>18-01-2025 16:52</time>
-        </p>
-          <p className="summary">
-            The Reserve Bank of India has implemented new rules to facilitate
-            the use of the rupee in international trade and investment. These
-            regulations allow
-          </p>
+          <img src={`http://localhost:3001/${cover}`} alt="Thumbnail of post" />
         </div>
+      </Link>{" "}
+      <div className="content">
+        <Link to={`/post/${_id}`}>
+          {" "}
+          <h2>{title} </h2>
+        </Link>
+        <p className="info">
+          <a href="/" className="author">
+            {author.username}
+          </a>
+          <time>{format(new Date(createdAt), "yyyy-MM-dd")}</time>
+        </p>
+        <p className="summary">{summary}</p>
       </div>
-    )
+    </div>
+  );
 }

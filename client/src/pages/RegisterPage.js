@@ -6,11 +6,17 @@ export default function RegisterPage() {
 
   async function register(ev) {
     ev.preventDefault();
-   await fetch('http://localhost:3001/register', {
+    const response = await fetch("http://localhost:3001/register", {
       method: "POST",
       body: JSON.stringify({ username, password }),
       headers: { "Content-Type": "application/json" },
     });
+
+    if(response.status !== 200){
+      alert("Registeration failed");
+    }else{
+      alert("Registeration succes");
+    }
   }
 
   return (
