@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -9,11 +10,13 @@ const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const fs = require("fs");
 
+const mongoUri = process.env.MONGO_URI;
+const secretCode = process.env.JWT_SECRET;
+
 const UserModel = require("./models/User");
 const PostModel = require("./models/Post");
 
 const salt = bcrypt.genSaltSync(10);
-const secretCode = "secretCode";
 
 app.use(
   cors({
@@ -25,9 +28,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-mongoose.connect(
-  "mongodb+srv://prashu49pj:LapM2eTQVg8glZN8@blog.blcl7.mongodb.net/?retryWrites=true&w=majority&appName=blog"
-);
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
