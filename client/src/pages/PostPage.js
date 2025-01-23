@@ -17,16 +17,27 @@ export default function PostPage({}) {
 
   return (
     <div>
-      <h1>{postInfo.title}</h1>
-      <hr/>
+      <div>
+        <Link to={`/edit/${postInfo._id}`}>
+          Edit this post
+        </Link>
+        </div>
+
+      <h1>{postInfo.title}</h1> <hr />
       <p>{postInfo.summary}</p>
-      <div className="image">
+      <p className="info">
+        <a href="/" className="author">
+          ~ {postInfo.author.username}
+        </a>
+        <time>{format(new Date(postInfo.createdAt), "yyyy-MM-dd")}</time>
+      </p>
+      <div className="postImage">
         <img
           src={`http://localhost:3001/${postInfo.cover}`}
           alt="Thumbnail of post"
         />
       </div>
-      <div dangerouslySetInnerHTML={{__html: postInfo.content}}></div>
+      <div dangerouslySetInnerHTML={{ __html: postInfo.content }}></div>
     </div>
   );
 }
